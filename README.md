@@ -29,7 +29,7 @@ We welcome contributions from the community. If you're interested in contributin
 
 ## Resources
 - [Bloq BP](https://docs.google.com/presentation/d/1CacsWzm-kQkM910ttsck_mtNhIbFEbn65kSjlD4jKcI/edit?usp=sharing)
-- [Web](www.bloq.wiki.com)
+- [Web](www.bloq.wiki)
 
 ## License
 (Include information about the license under which your project is distributed.)
