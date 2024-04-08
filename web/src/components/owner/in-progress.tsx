@@ -1,5 +1,6 @@
 import { api } from "~/trpc/server";
-import { TaskCenterAcceptedBox } from "../taskcenter/accepted-box";
+
+import { OwnerBox } from "./owner-box";
 
 export async function InProgress() {
   const list = await api.task.get_progress();
@@ -11,7 +12,7 @@ export async function InProgress() {
       </div>
       <div className=" grid grid-cols-2 gap-4">
         {list.map((item) => (
-          <TaskCenterAcceptedBox key={item.id} {...item} />
+          <OwnerBox key={item.id} {...item} />
         ))}
       </div>
     </div>

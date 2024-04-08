@@ -1,89 +1,127 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
-import Image from "next/image";
-
-import { cn } from "~/lib/utils";
+import Link, { type LinkProps } from "next/link";
+import { useRouter } from "next/navigation";
+import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet";
+import { Button } from "../ui/button";
+import { Icons } from "../icons";
 import { siteConfig } from "~/config/site";
-import { ViewVerticalIcon } from "@radix-ui/react-icons";
-import { useSelectedLayoutSegment } from "next/navigation";
+import { ScrollArea } from "../ui/scroll-area";
+import { cn } from "~/lib/utils";
 
-import { Button } from "~/components/ui/button";
-import { ScrollArea } from "~/components/ui/scroll-area";
-
-import { Sheet, SheetContent, SheetTrigger } from "~/components/ui/sheet";
-import type { MobileNavItem } from "~/types";
+interface Route {
+  readonly label: string;
+  readonly path: string;
+}
 
 interface MobileNavProps {
-  mainNavItems?: MobileNavItem[];
+  readonly routes: Readonly<Route[]>;
 }
 
-export function MobileNav({ mainNavItems }: MobileNavProps) {
-  const segment = useSelectedLayoutSegment();
-  const [isOpen, setIsOpen] = React.useState(false);
-
-  const navItems = React.useMemo(() => {
-    const items = mainNavItems ?? [];
-
-    return items;
-  }, [mainNavItems]);
+export const MobileNav = React.memo(({ routes }: MobileNavProps) => {
+  const [open, setOpen] = React.useState(false);
 
   return (
-    <div className="flex flex-1 items-center justify-between lg:hidden">
-      <Sheet open={isOpen} onOpenChange={setIsOpen}>
-        <SheetTrigger asChild>
-          <Button
-            variant="ghost"
-            className="mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 lg:hidden"
+    <Sheet open={open} onOpenChange={setOpen}>
+      <SheetTrigger asChild>
+        <Button
+          variant="ghost"
+          className="mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden"
+        >
+          <svg
+            strokeWidth="1.5"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5"
           >
-            <ViewVerticalIcon className="h-6 w-6" aria-hidden="true" />
-            <span className="sr-only">Toggle Menu</span>
-          </Button>
-        </SheetTrigger>
-        <SheetContent side="left" className="pl-1 pr-0">
-          <ScrollArea className="h-[calc(100vh-8rem)] py-0 pl-6">
-            <div className="flex flex-col gap-4 pl-1 pr-7">
-              <MobileLink
-                href={String("subItem.href")}
-                segment={String(segment)}
-                setIsOpen={setIsOpen}
-              >
-                <span>1</span>
-              </MobileLink>
-            </div>
-          </ScrollArea>
-        </SheetContent>
-      </Sheet>
-    </div>
+            <path
+              d="M3 5H11"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            ></path>
+            <path
+              d="M3 12H16"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            ></path>
+            <path
+              d="M3 19H21"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            ></path>
+          </svg>
+          <span className="sr-only">Toggle Menu</span>
+        </Button>
+      </SheetTrigger>
+      <SheetContent side="left" className="pr-0">
+        <MobileLink
+          href="/"
+          className="flex items-center"
+          onOpenChange={setOpen}
+        >
+          <Icons.logo className="mr-2 h-6 w-6" />
+          <span className="text-lg font-bold capitalize md:hidden">
+            {siteConfig.name}
+          </span>
+        </MobileLink>
+        <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">
+          <div className="flex flex-col space-y-3">
+            {routes.map(
+              (item) =>
+                item.path && (
+                  <MobileLink
+                    key={item.path}
+                    href={item.path}
+                    onOpenChange={setOpen}
+                    className="capitalize"
+                  >
+                    {item.label}
+                  </MobileLink>
+                ),
+            )}
+          </div>
+        </ScrollArea>
+      </SheetContent>
+    </Sheet>
   );
-}
+});
 
-interface MobileLinkProps extends React.PropsWithChildren {
-  href: string;
-  disabled?: boolean;
-  segment: string;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+interface MobileLinkProps extends LinkProps {
+  onOpenChange?: (open: boolean) => void;
+  children: React.ReactNode;
+  className?: string;
 }
 
 function MobileLink({
-  children,
   href,
-  disabled,
-  segment,
-  setIsOpen,
+  onOpenChange,
+  className,
+  children,
+  ...props
 }: MobileLinkProps) {
+  const router = useRouter();
   return (
     <Link
       href={href}
-      className={cn(
-        "text-foreground/70 transition-colors hover:text-foreground",
-        href.includes(segment) && "text-foreground",
-        disabled && "pointer-events-none opacity-60",
-      )}
-      onClick={() => setIsOpen(false)}
+      onClick={() => {
+        // eslint-disable-next-line @typescript-eslint/no-base-to-string
+        router.push(href.toString());
+        onOpenChange?.(false);
+      }}
+      className={cn(className)}
+      {...props}
     >
       {children}
     </Link>
   );
 }
+
+MobileNav.displayName = "MobileNav";

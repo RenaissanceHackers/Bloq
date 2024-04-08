@@ -13,7 +13,7 @@ import { CarouselCard } from "./carousel-card";
 
 export function CarouselList() {
   return (
-    <div className="mx-auto hidden px-3 transition-all duration-300 sm:block lg:max-w-6xl">
+    <div className="mx-auto hidden px-3 transition-all duration-300 md:block lg:max-w-6xl">
       <Carousel
         opts={{
           loop: true,
@@ -29,9 +29,9 @@ export function CarouselList() {
           {Array.from({ length: 10 }, (_, index) => (
             <CarouselItem
               key={index}
-              className="basis-full  md:basis-1/2 xl:basis-1/3"
+              className="basis-full md:basis-1/2"
             >
-              <CarouselCard />
+              <CarouselCard index={index} />
             </CarouselItem>
           ))}
         </CarouselContent>

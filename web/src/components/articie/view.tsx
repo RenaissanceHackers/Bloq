@@ -15,48 +15,62 @@ import { defaultExtensions } from "../create/extensions";
 import { slashCommand, suggestionItems } from "../create/slash-command";
 import { uploadFn } from "../create/image-upload";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { api } from "~/trpc/react";
 
 const extensions = [...defaultExtensions, slashCommand];
 
-export function View() {
-  const [initialContent, setInitialContent] =
-    React.useState<null | JSONContent>(null);
+interface ViewProps {
+  id: number;
+  title: string;
+  content: string | null;
+  userId: number;
+  likes: number;
+  saves: number;
+  views: number;
+  taskId: number | null;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
-  React.useEffect(() => {
-    const content = window.localStorage.getItem("novel-content");
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-    if (content) setInitialContent(JSON.parse(content));
-    else setInitialContent(defaultEditorContent);
-  }, []);
+export function View(props: ViewProps) {
+  if (!props.content) return null;
+  const content = {
+    type: "doc",
+    content: JSON.parse(props.content),
+  };
 
-  if (!initialContent) return null;
+  const user = api.user.get.useQuery(
+    { id: props.userId },
+    { enabled: !!props.userId },
+  ).data;
+  console.log(content);
 
   return (
     <div className="relative w-full max-w-screen-lg">
       <div className="flex flex-col gap-2.5">
         <p className="w-full text-2xl font-bold leading-none tracking-tight">
-          Jupiter Exchange Surpasses Uniswap to Become the Most Used DeFi
-          Trading Platform Across All Blockchains
+          {props.title}
         </p>
-        <p className="text-sm font-normal text-gray-500">
-          Jupiter&apos;s rise to become the leading DeFi trading platform, with
-          over 1 million monthly active users and a pivotal role in onboarding
-          new Solana users, underscores its innovative approach and market
-          dominance.
-        </p>
+        <p className="text-sm font-normal text-gray-500"></p>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-1.5 text-gray-500">
               <Avatar className="h-8 w-8">
                 <AvatarImage
                   className="h-8 w-8 rounded-full"
-                  src="https://github.com/shadcn.png"
-                  alt="@shadcn"
+                  src={user?.avatart}
+                  alt={user?.username}
                 />
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
-              <div className="uppercase">SOLANAFLOOR</div>
-              <div className="font-normal">Mar 17, 24</div>
+              <div className="uppercase">{user?.username}</div>
+              <div className="font-normal">
+                {props.updatedAt.toLocaleDateString("en-US", {
+                  month: "long",
+                  day: "numeric",
+                  hour: "2-digit",
+                })}
+              </div>
             </div>
           </div>
         </div>
@@ -64,7 +78,7 @@ export function View() {
       <EditorRoot>
         <EditorContent
           editable={false}
-          initialContent={initialContent}
+          initialContent={JSON.parse(props.content) as unknown as JSONContent}
           extensions={extensions}
           className="relative w-full max-w-screen-lg"
           editorProps={{

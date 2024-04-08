@@ -97,12 +97,10 @@ export function Participants({ title, color, iconName }: TotalProps) {
             <CountUp end={Number(userTotal)} start={0} duration={3} />
           </div>
         </div>
-        <CardFooter className="flex h-10 items-center py-0">
-          <p className="text-sm text-muted-foreground">
-            Last update:{" "}
-            {update.data?.updatedAt
-              ? update.data.updatedAt.toLocaleString("en-GB")
-              : ""}
+        <CardFooter className="flex max-w-lg flex-1 items-center text-balance py-0 text-sm leading-relaxed text-muted-foreground">
+          <p className="w-full whitespace-normal">
+            Last update:
+            <span>1 hour ago</span>
           </p>
         </CardFooter>
       </Card>

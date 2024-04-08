@@ -10,9 +10,10 @@ export function CreateWithWallet({ children }: { children: React.ReactNode }) {
 
   const { mutate } = api.user.create.useMutation();
 
+  const twitter = "";
   const create = React.useCallback(
     (address: string) => {
-      mutate({ address });
+      mutate({ address, twitter });
     },
     [mutate],
   );

@@ -16,7 +16,7 @@ export function Providers({ children }: ProvidersProps) {
   return (
     <TRPCReactProvider>
       <WalletConnectProvider>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <NextTopLoader />
           <TooltipProvider>{children}</TooltipProvider>
         </ThemeProvider>

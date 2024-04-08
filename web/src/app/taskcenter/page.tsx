@@ -1,12 +1,15 @@
-import { TaskCenterAcceptedBox } from "~/components/taskcenter/accepted-box";
+import React from "react";
+
+import { api } from "~/trpc/server";
 import { TaskCenterBox } from "~/components/taskcenter/box";
-import { TaskCenterCompletedBox } from "~/components/taskcenter/completed-box";
-import { TaskCenterSubmittedBox } from "~/components/taskcenter/submitted-box";
+import { AcceptedList } from "~/components/taskcenter/accepted-list";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 
-export default function TaskCenterPage() {
+export default async function TaskCenterPage() {
+  const all_task = await api.task.get();
+
   return (
-    <section className="flex-1">
+    <section className="flex-1 bg-background">
       <div className="container max-w-7xl flex-1 space-y-3 py-12">
         <div className="text-2xl font-semibold">Tasks center</div>
         <Tabs defaultValue="explore" className="">
@@ -19,54 +22,20 @@ export default function TaskCenterPage() {
             </TabsTrigger>
           </TabsList>
           <TabsContent value="explore">
-            <div className="grid flex-1 flex-grow grid-cols-3 gap-4 pt-4">
-              {Array.from({ length: 10 }, (_, index) => (
-                <TaskCenterBox key={index} />
-              ))}
-            </div>
+            <React.Suspense>
+              {all_task ? (
+                <div className="grid flex-1 flex-grow gap-4 pt-4 transition-all duration-300  md:grid-cols-2 lg:grid-cols-3">
+                  {all_task.map((item) => (
+                    <TaskCenterBox key={item.id} {...item} />
+                  ))}
+                </div>
+              ) : (
+                <div>loading</div>
+              )}
+            </React.Suspense>
           </TabsContent>
-          <TabsContent value="accepted" className="">
-            <div className="grid flex-1 grid-cols-3 gap-4 pt-4">
-              <div className="space-y-2">
-                <div className="flex items-center space-x-1">
-                  <span className="font-normal capitalize">Draft</span>
-                  <span className="rounded-full bg-white px-2 font-normal">
-                    1
-                  </span>
-                </div>
-                <div className="grid grid-cols-1 gap-4">
-                  {Array.from({ length: 5 }, (_, index) => (
-                    <TaskCenterAcceptedBox key={index} />
-                  ))}
-                </div>
-              </div>
-              <div className="space-y-2">
-                <div className="flex items-center space-x-1">
-                  <span className="font-normal capitalize">Submitted</span>
-                  <span className="rounded-full bg-white px-2 font-normal">
-                    1
-                  </span>
-                </div>
-                <div className="grid grid-cols-1 gap-4">
-                  {Array.from({ length: 5 }, (_, index) => (
-                    <TaskCenterSubmittedBox key={index} />
-                  ))}
-                </div>
-              </div>
-              <div className="space-y-2">
-                <div className="flex items-center space-x-1">
-                  <span className="font-normal capitalize">Completed</span>
-                  <span className="rounded-full bg-white px-2 font-normal">
-                    1
-                  </span>
-                </div>
-                <div className="grid grid-cols-1 gap-4">
-                  {Array.from({ length: 5 }, (_, index) => (
-                    <TaskCenterCompletedBox key={index} />
-                  ))}
-                </div>
-              </div>
-            </div>
+          <TabsContent value="accepted">
+            <AcceptedList />
           </TabsContent>
         </Tabs>
       </div>

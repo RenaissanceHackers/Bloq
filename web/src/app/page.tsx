@@ -29,17 +29,17 @@ export default function HomePage() {
   }, [setUser, user, wallet.publicKey]);
 
   return (
-    <section className="flex h-full flex-col items-center space-y-6 bg-accent-background py-12">
-      <div className="container max-w-6xl px-16">
+    <section className="flex h-full flex-col items-center space-y-6 bg-background py-4 transition-all duration-300 lg:py-10">
+      <div className="container max-w-6xl px-4 md:px-16 lg:px-10">
         <CarouselProgressBar />
         <CarouselList />
       </div>
       <Separator />
-      <div className="container flex max-w-6xl flex-col px-4">
+      <div className="container flex max-w-6xl flex-col bg-background px-4">
         <CommandMenu />
-        <div className="flex flex-1 transform justify-center transition-all  duration-300 ease-in-out xl:justify-between">
+        <div className="flex max-w-6xl flex-1 transform justify-center transition-all duration-300 ease-in-out xl:justify-between">
           <List />
-          <div className="hidden h-fit w-full max-w-96 py-2 xl:flex">
+          <div className="hidden h-fit w-full max-w-96 py-2 xl:block">
             <div className="flex w-full rounded-md border p-6 shadow">test</div>
           </div>
         </div>

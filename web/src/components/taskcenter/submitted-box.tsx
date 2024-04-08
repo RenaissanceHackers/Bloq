@@ -4,7 +4,7 @@ import { Separator } from "../ui/separator";
 export function TaskCenterSubmittedBox() {
   const ren = 20000;
   return (
-    <div className="space-y-4 rounded-xl border bg-white p-2 pt-3 shadow">
+    <div className="space-y-4 rounded-xl border bg-background p-2 pt-3 shadow">
       <div className="flex items-center justify-between">
         <div className="rounded-full border px-4 py-1.5 font-normal">Edit</div>
         <div className="flex items-center gap-0.5">

@@ -9,9 +9,14 @@ import { useWallet } from "@jup-ag/wallet-adapter";
 
 import CountUp from "react-countup";
 
-import { cn } from "~/lib/utils";
-import Lottie, { type LottieRefCurrentProps } from "lottie-react";
-import { Card, CardFooter, CardHeader, CardTitle } from "~/components/ui/card";
+import { type LottieRefCurrentProps } from "lottie-react";
+import {
+  Card,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "~/components/ui/card";
 
 import { motion } from "framer-motion";
 
@@ -45,7 +50,6 @@ export function Total({ title, color, iconName }: TotalProps) {
     },
   );
 
-  const icon = require(`../../../public/icons/${iconName}.json`);
   const iconRef = React.useRef<LottieRefCurrentProps | null>(null);
 
   React.useEffect(() => {
@@ -56,53 +60,23 @@ export function Total({ title, color, iconName }: TotalProps) {
 
   return (
     <motion.div
-      className=""
+      className="col-span-2 grid md:col-span-1"
       onMouseEnter={() => iconRef.current?.play()}
       onMouseLeave={() => iconRef.current?.stop()}
     >
-      <Card className="relative h-fit pb-0">
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className={cn("text-sm font-medium", `text-[${color}]`)}>
-            {title}
-          </CardTitle>
-          <div className="hidden xl:block">
-            <div className="hidden dark:block">
-              <Lottie
-                lottieRef={iconRef}
-                animationData={icon}
-                loop={false}
-                autoplay={false}
-                className="h-5 w-5 stroke-black"
-              />
-            </div>
-            <div className="block dark:hidden">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                className="h-4 w-4 text-muted-foreground"
-              >
-                <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-              </svg>
-            </div>
-          </div>
+      <Card className="" x-chunk="dashboard-05-chunk-0">
+        <CardHeader className="pb-3">
+          <CardTitle>{title}</CardTitle>
         </CardHeader>
-        <div className="px-6">
+        <CardDescription className="flex max-w-lg flex-col space-y-1.5 text-balance px-6 leading-relaxed">
           <div className="text-2xl font-bold">
-            +
-            <CountUp end={Number(userTotal)} start={0} duration={3} />
+            <CountUp end={Number(0)} start={0} duration={3} />
           </div>
-        </div>
-        <CardFooter className="flex h-10 items-center py-0">
-          <p className="text-sm text-muted-foreground">
-            Last update:{" "}
-            {update.data?.updatedAt
-              ? update.data.updatedAt.toLocaleString("en-GB")
-              : ""}
+        </CardDescription>
+        <CardFooter className="flex max-w-lg flex-1 items-center text-balance py-0 text-sm leading-relaxed text-muted-foreground">
+          <p className="w-full whitespace-normal">
+            Last update:
+            <span>1 hour ago</span>
           </p>
         </CardFooter>
       </Card>

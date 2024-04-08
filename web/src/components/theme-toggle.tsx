@@ -18,7 +18,7 @@ export default function ThemeToggle() {
     <>
       {init ? (
         <button
-          className="rounded-md hover:border hover:border-border p-2 duration-200 ease-in-out"
+          className="hidden rounded-md p-2 duration-200 ease-in-out hover:border hover:border-border lg:block"
           onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
           aria-label={`Switch theme to ${resolvedTheme === "dark" ? "light" : "dark"}`}
         >

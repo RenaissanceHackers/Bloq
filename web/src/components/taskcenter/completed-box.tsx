@@ -1,11 +1,9 @@
-import { Icons } from "../icons";
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
 
 export function TaskCenterCompletedBox() {
-  const ren = 20000;
   return (
-    <div className="space-y-4 rounded-xl border bg-white p-2 pt-3 shadow">
+    <div className="space-y-4 rounded-xl border bg-background p-2 pt-3 shadow">
       <div className="flex items-center gap-0.5 text-xs font-normal">
         <span className="capitalize">Completed: </span>
         <span className="">Apr.10,2024</span>

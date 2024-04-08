@@ -23,6 +23,8 @@ import { titleAtom } from "~/context/atom";
 import { api } from "~/trpc/react";
 import { useWallet } from "@jup-ag/wallet-adapter";
 
+import { cn } from "~/lib/utils";
+
 const extensions = [...defaultExtensions, slashCommand];
 
 interface FormValues {
@@ -51,6 +53,8 @@ export function Editor() {
 
   const [saveStatus, setSaveStatus] = React.useState("Saved");
 
+  const [taskId, setTaskId] = React.useState<number>();
+
   const { mutate } = api.article.create.useMutation();
 
   const [json, setJson] = React.useState<JSONContent>();
@@ -70,15 +74,19 @@ export function Editor() {
 
   const [title, setTitle] = useAtom(titleAtom);
 
+  const [loading, setLoading] = React.useState(false);
+
   const onSubmit = handleSubmit((data) => {
     if (publicKey) {
+      setLoading(true);
       setTitle(data.formTitle);
-      const submitContent = String(json);
+      const submitContent = JSON.stringify(json);
       mutate({
         title: data.formTitle,
         content: submitContent,
         address: publicKey.toString(),
       });
+      setLoading(false);
     }
   });
 
@@ -93,85 +101,111 @@ export function Editor() {
     } else setInitialContent(defaultEditorContent);
   }, []);
 
-  if (!initialContent) return null;
-
+  const taskList = api.task.get_by_user.useQuery(
+    {
+      address: publicKey ? publicKey.toString() : "", // 使用可选链，以防 publicKey 是 null
+    },
+    { enabled: !!publicKey },
+  );
+  if (!initialContent || !publicKey) return null;
   return (
-    <form
-      onSubmit={onSubmit}
-      className="relative w-full max-w-screen-lg border-muted bg-background sm:mb-[calc(20vh)] sm:rounded-lg sm:border sm:shadow-lg"
-    >
-      <div className="absolute right-5 top-5 z-10 mb-5 rounded-lg bg-accent px-2 py-1 text-sm text-muted-foreground">
-        {saveStatus}
-      </div>
-      <div className="p-4">
-        <Input
-          {...register("formTitle")}
-          placeholder="Untitled"
-          className="h-12 w-full border-none text-2xl font-bold shadow-none outline-none focus-visible:ring-0"
-          type="text"
-          defaultValue={title}
-        />
-      </div>
-      <EditorRoot>
-        <EditorContent
-          initialContent={initialContent}
-          extensions={extensions}
-          className="w-full"
-          editorProps={{
-            handleDOMEvents: {
-              keydown: (_view, event) => handleCommandNavigation(event),
-            },
-            handlePaste: (view, event) =>
-              handleImagePaste(view, event, uploadFn),
-            handleDrop: (view, event, _slice, moved) =>
-              handleImageDrop(view, event, moved, uploadFn),
-            attributes: {
-              class: `prose prose-lg dark:prose-invert prose-headings:font-title font-default focus:outline-none max-w-full !pb-6 !px-6 !pt-2`,
-            },
-          }}
-          onUpdate={({ editor }) => {
-            void debouncedUpdates(editor);
-            setSaveStatus("Unsaved");
-          }}
-          slotAfter={<ImageResizer />}
-        >
-          <EditorCommand className="z-50 h-auto overflow-y-auto rounded-md border border-muted bg-background px-1 py-2 shadow-md transition-all">
-            <EditorCommandEmpty className="px-2 text-muted-foreground">
-              No results
-            </EditorCommandEmpty>
-            {suggestionItems.map((item) => (
-              <EditorCommandItem
-                value={item.title}
-                onCommand={(val) => item.command?.(val)}
-                className={`flex w-full items-center space-x-2 rounded-md px-2 text-left text-sm hover:bg-accent aria-selected:bg-accent `}
-                key={item.title}
-              >
-                <div className="flex h-10 w-10 items-center justify-center rounded-md border border-muted bg-background">
-                  {item.icon}
-                </div>
-                <div>
-                  <p className="font-medium">{item.title}</p>
-                  <p className="text-xs text-muted-foreground">
-                    {item.description}
-                  </p>
-                </div>
-              </EditorCommandItem>
-            ))}
-          </EditorCommand>
-          <div className="flex items-center justify-between px-4 pb-2">
-            <TextButtons />
-            <div>
-              <Button
-                type="submit"
-                className="bg-[#17C964]/80 font-bold uppercase hover:bg-[#17C964]"
-              >
-                <span className="tracking-wide">publish</span>
-                <Icons.chevron_right className="h-5 w-5" />
-              </Button>
+    <form onSubmit={onSubmit} className="flex flex-col w-full">
+      <div className="relative w-full max-w-screen-lg border-muted bg-background sm:rounded-lg sm:border sm:shadow-lg">
+        <div className="absolute right-5 top-5 z-10 mb-5 rounded-lg bg-accent px-2 py-1 text-sm text-muted-foreground">
+          {saveStatus}
+        </div>
+        <div className="p-4">
+          <Input
+            {...register("formTitle")}
+            placeholder="Untitled"
+            className="h-12 w-full border-none text-2xl font-bold shadow-none outline-none focus-visible:ring-0"
+            type="text"
+            defaultValue={title}
+          />
+        </div>
+        <EditorRoot>
+          <EditorContent
+            initialContent={initialContent}
+            extensions={extensions}
+            className="w-full"
+            editorProps={{
+              handleDOMEvents: {
+                keydown: (_view, event) => handleCommandNavigation(event),
+              },
+              handlePaste: (view, event) =>
+                handleImagePaste(view, event, uploadFn),
+              handleDrop: (view, event, _slice, moved) =>
+                handleImageDrop(view, event, moved, uploadFn),
+              attributes: {
+                class: `prose prose-lg dark:prose-invert prose-headings:font-title font-default focus:outline-none max-w-full !pb-6 !px-6 !pt-2`,
+              },
+            }}
+            onUpdate={({ editor }) => {
+              void debouncedUpdates(editor);
+              setSaveStatus("Unsaved");
+            }}
+            slotAfter={<ImageResizer />}
+          >
+            <EditorCommand className="z-50 h-auto overflow-y-auto rounded-md border border-muted bg-background px-1 py-2 shadow-md transition-all">
+              <EditorCommandEmpty className="px-2 text-muted-foreground">
+                No results
+              </EditorCommandEmpty>
+              {suggestionItems.map((item) => (
+                <EditorCommandItem
+                  value={item.title}
+                  onCommand={(val) => item.command?.(val)}
+                  className={`flex w-full items-center space-x-2 rounded-md px-2 text-left text-sm hover:bg-accent aria-selected:bg-accent `}
+                  key={item.title}
+                >
+                  <div className="flex h-10 w-10 items-center justify-center rounded-md border border-muted bg-background">
+                    {item.icon}
+                  </div>
+                  <div>
+                    <p className="font-medium">{item.title}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {item.description}
+                    </p>
+                  </div>
+                </EditorCommandItem>
+              ))}
+            </EditorCommand>
+            <div className="flex items-center justify-between px-4 pb-2">
+              <TextButtons />
+              <div>
+                <Button
+                  type="submit"
+                  className="w-28 bg-[#17C964]/80 font-bold uppercase hover:bg-[#17C964]"
+                >
+                  {loading ? (
+                    <div className=" flex w-full justify-center">
+                      <div className="loader h-5 w-5 border-white"></div>
+                    </div>
+                  ) : (
+                    <>
+                      <span className="tracking-wide">publish</span>
+                      <Icons.chevron_right className="h-5 w-5" />
+                    </>
+                  )}
+                </Button>
+              </div>
             </div>
-          </div>
-        </EditorContent>
-      </EditorRoot>
+          </EditorContent>
+        </EditorRoot>
+      </div>
+      <div className="flex items-center gap-4 pt-8">
+        {taskList.data?.map((item) => (
+          <button
+            key={item.id}
+            className={cn(
+              "rounded-lg border px-3 py-1 text-left text-sm transition-all hover:bg-accent",
+              taskId === item.id && "bg-muted",
+            )}
+            onClick={() => setTaskId(item.id)}
+          >
+            {item.title}
+          </button>
+        ))}
+      </div>
     </form>
   );
 }

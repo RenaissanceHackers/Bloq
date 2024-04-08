@@ -30,7 +30,7 @@ export const MainNav = React.memo(({ routes }: MainNavProps) => {
           {siteConfig.name}
         </span>
       </Link>
-      <nav className="flex items-center gap-4 text-sm">
+      <nav className="gap-2 flex lg:gap-4 items-center text-sm">
         {routes.map((route, index) => (
           <Link
             href={route.path}

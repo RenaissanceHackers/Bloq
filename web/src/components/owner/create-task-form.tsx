@@ -31,7 +31,7 @@ type TReward = "token" | "point";
 
 const FormSchema = z.object({
   title: z.string(),
-  content: z.string(),
+  description: z.string(),
   duration: z.string(),
   tokenRewardName: z.string().optional(),
   tokenRewardAmount: z.string().optional(),
@@ -64,6 +64,7 @@ export function CreateTaskForm() {
 
       mutate({
         title: data.title,
+        description: data.description,
         expiryDate: expiryDate.toISOString(),
         address: publicKey?.toString(),
         status: "draft",
@@ -72,7 +73,7 @@ export function CreateTaskForm() {
           data.tokenRewardAmount ? data.tokenRewardAmount : "0",
         ),
         tokenName: data.tokenRewardName,
-        ponintAmount: data.tokenRewardAmount,
+        pointAmount: data.tokenRewardAmount,
         tokenAmount: data.tokenRewardAmount,
       });
     }
@@ -115,7 +116,7 @@ export function CreateTaskForm() {
           </Label>
           <FormField
             control={form.control}
-            name="content"
+            name="description"
             render={({ field }) => (
               <FormItem>
                 <FormControl>
@@ -245,7 +246,9 @@ export function CreateTaskForm() {
           </span>
           <span>Contribution points</span>
         </div>
-        <Button type="submit">publick</Button>
+        <Button type="submit" className="bg-green-500 hover:bg-green-600 text-white font-semibold text-lg">
+          publish
+        </Button>
       </form>
     </Form>
   );

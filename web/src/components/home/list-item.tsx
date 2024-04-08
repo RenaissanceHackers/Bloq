@@ -11,7 +11,7 @@ import Link from "next/link";
 export function ListItem() {
   const list = api.article.get_all_posts.useQuery().data;
   return (
-    <React.Suspense>
+    <React.Suspense fallback={<div>loading</div>}>
       {list?.map((item, index) => (
         <Link key={index} href={`/article/${item.id.toString()}`}>
           <motion.div
@@ -21,7 +21,7 @@ export function ListItem() {
             initial={{ opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.1 * index, ease: "easeOut" }}
-            className="group w-full max-w-2xl  rounded bg-white p-4 pb-2 shadow"
+            className="group w-full max-w-2xl rounded bg-background p-4 pb-2 shadow"
           >
             <div className="flex items-center gap-4 pb-2">
               <div className="relative h-28 w-28">
@@ -29,7 +29,7 @@ export function ListItem() {
                   fill
                   alt="test"
                   src="/test.jpg"
-                  className="aspect-[2/1] animate-reveal rounded-xl border object-cover transition-colors"
+                  className="aspect-[2/1] animate-reveal w-full rounded-xl border object-cover transition-colors"
                 />
               </div>
               <div className="flex h-28 flex-1 flex-col justify-between">
@@ -37,11 +37,7 @@ export function ListItem() {
                   {item.title}
                 </div>
                 <p className="line-clamp-3 text-xs text-[#71717A]">
-                  The 6 BIGGEST Solana New Pieces of the Week: Solana degen wins
-                  $49k with new BONK game. DRiP Haus founder believes it will
-                  only take one mega influencer to introduce another million
-                  people to Solana. cNFTs are set to revolutionize distribution
-                  models using Solana.
+                  {item.task?.description}
                 </p>
                 <div className="flex h-5 items-center justify-between">
                   <div className="flex items-center gap-2">

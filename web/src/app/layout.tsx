@@ -23,7 +23,7 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${font.className}`}>
+      <body className={`${font.className} light`}>
         <Providers>
           <CreateWithWallet>
             <div className="relative flex h-screen flex-col bg-background antialiased dark:bg-neutral-950">

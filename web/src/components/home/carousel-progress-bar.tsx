@@ -69,7 +69,7 @@ export function CarouselProgressBar() {
   };
 
   return (
-    <section className="w-full  overflow-hidden sm:hidden">
+    <section className="w-full  overflow-hidden rounded-md transition-all duration-300 md:hidden ">
       <Carousel
         className="relative h-full space-y-4"
         opts={{
@@ -90,9 +90,9 @@ export function CarouselProgressBar() {
         <CarouselContent
           className={cn("!fade__container", !!api ? "!fade__is-ready" : "")}
         >
-          {slides.map((item) => (
+          {slides.map((item,index) => (
             <CarouselItem key={item.title} className="!fade__slide">
-              <CarouselCard />
+              <CarouselCard index={index}/>
             </CarouselItem>
           ))}
         </CarouselContent>

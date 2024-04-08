@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client";
 
-import Image from "next/image";
+import Image, { type StaticImageData } from "next/image";
 import {
   EditorContent,
   type EditorInstance,
@@ -19,17 +20,12 @@ import { uploadFn } from "../create/image-upload";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 
-import {
-  Form,
-  FormField,
-  FormControl,
-  FormItem,
-  FormDescription,
-} from "../ui/form";
+import { Form } from "../ui/form";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { useWallet } from "@jup-ag/wallet-adapter";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { api } from "~/trpc/react";
 
 const FormSchema = z.object({
   content: z.string(),
@@ -39,7 +35,11 @@ type FormValues = z.infer<typeof FormSchema>;
 
 const extensions = [...defaultExtensions, slashCommand];
 
-export function Discussion() {
+interface DiscussionProps {
+  postID: number;
+}
+
+export function Discussion({ postID }: DiscussionProps) {
   const [initialContent, setInitialContent] =
     React.useState<null | JSONContent>(null);
 
@@ -49,16 +49,26 @@ export function Discussion() {
 
   const { publicKey } = useWallet();
 
+  const user = api.user.get_by_address.useQuery(
+    { address: publicKey ? publicKey.toString() : "" },
+    { enabled: !!publicKey },
+  ).data;
+
   const form = useForm<FormValues>({
     resolver: zodResolver(FormSchema),
-
     mode: "onChange",
   });
 
+  const { mutate, status } = api.comment.create.useMutation();
+
   function onSubmit(data: FormValues) {
     console.log(data);
-    if (publicKey) {
-      const now = Date.now();
+    if (publicKey && user?.id) {
+      mutate({
+        userId: user?.id,
+        postId: postID,
+        content: JSON.stringify(content),
+      });
     }
   }
 
@@ -78,12 +88,13 @@ export function Discussion() {
   }, []);
 
   if (!initialContent) return null;
+
   return (
     <div className="flex gap-2">
       <div className="relative mt-0.5 h-8 w-8 rounded-full">
         <Image
           alt="test"
-          src={"/test.jpg"}
+          src={user?.avatart as unknown as StaticImageData}
           className="rounded-full border"
           fill
         />
@@ -111,12 +122,26 @@ export function Discussion() {
                 void debouncedUpdates(editor);
               }}
             >
-              <Form {...form}>
-                <form className="flex items-center justify-between px-4 pb-2">
-                  <TextButtons />
-                  <Button>publish</Button>
-                </form>
-              </Form>
+              <div className="flex items-center justify-between px-4 pb-2">
+                <TextButtons />
+                {publicKey ? (
+                  <Form {...form}>
+                    <form
+                      onSubmit={form.handleSubmit(onSubmit)}
+                      className="z-50"
+                    >
+                      <Button
+                        type="submit"
+                        onClick={() => console.log("11111")}
+                      >
+                        publish
+                      </Button>
+                    </form>
+                  </Form>
+                ) : (
+                  <div>no connect</div>
+                )}
+              </div>
             </EditorContent>
           </EditorRoot>
         </div>
