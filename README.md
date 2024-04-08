@@ -4,12 +4,12 @@
 Bloq is a revolutionary platform focusing on the Consumer Apps track for Airdrops Driven Content Creation. Our mission is to make the Airdrops Economy in the Solana Ecosystem more efficient and beneficial, transforming the way airdrops are distributed and utilized.
 
 <p align="center">
-  <img src="explore.png" width="200" /> 
-  <img src="explore.png" width="200" />
+  <img src="Home.png" width="200" /> 
+  <img src="artical.png" width="200" />
 </p>
 <p align="center">
   <img src="explore.png" width="200" /> 
-  <img src="explore.png" width="200" />
+  <img src="explore-1.png" width="200" />
 </p>
 
 ## Features
