@@ -5,7 +5,7 @@ seeds = false
 skip-lint = false
 
 [programs.localnet]
-blockchain = "TQDy38CR1UyHnwP8eGL1tKdNjDjRRH5AdhGiUXuYqtH"
+taskmarketplace = "qUXSXhbCmwFiEbVSRNVkQSNDuM9dLXQHxmfxus72ZKc"
 
 [registry]
 url = "https://api.apr.dev"
