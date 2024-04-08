@@ -2,7 +2,7 @@
 
 ## Introduction
 Bloq is a revolutionary platform focusing on the Consumer Apps track for Airdrops Driven Content Creation. Our mission is to make the Airdrops Economy in the Solana Ecosystem more efficient and beneficial, transforming the way airdrops are distributed and utilized.
-
+![Bloq Logo](explore.png)
 ## Features
 - **UGC Powered Airdrop:** Set clear User-Generated Content (UGC) tasks for obtaining airdrops, ensuring value-driven engagement.
 - **KPI Driven Airdrop:** Clear metrics quantify the value creation of the airdrop, making it user-friendly and effective.
