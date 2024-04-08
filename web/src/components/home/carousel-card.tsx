@@ -2,8 +2,6 @@ import Image from "next/image";
 
 import { cn } from "~/lib/utils";
 
-import base2 from "public/images/base-2.png";
-import base3 from "public/images/base-3.png";
 import base4 from "public/images/base-4.png";
 import base5 from "public/images/base-5.png";
 
@@ -13,10 +11,10 @@ interface CarouselCardProps {
   index: number;
 }
 
-const ImageList = [base2, base3, base4, base5];
+const ImageList = [base4, base5];
 
 export function CarouselCard({ index }: CarouselCardProps) {
-  const img = ImageList[index % 4]!;
+  const img = ImageList[index % 2]!;
   return (
     <div
       className={cn(

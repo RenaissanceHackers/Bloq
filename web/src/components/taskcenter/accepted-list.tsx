@@ -2,14 +2,22 @@
 
 import React from "react";
 
-import { api } from "~/trpc/react";
 import { useWallet } from "@jup-ag/wallet-adapter";
-import { TaskCenterAcceptedBox } from "./accepted-box";
-import { TaskCenterCompletedBox } from "./completed-box";
-import { TaskCenterSubmittedBox } from "./submitted-box";
+
+import { useAtom } from "jotai";
+import { draftTaskAtom, exploreTaskAtom } from "~/context/atom";
+import { HardBox } from "./hard-box";
+import { HardViewBox } from "../owner/hard-view";
 
 export function AcceptedList() {
   const { publicKey, connected } = useWallet();
+  const [explore] = useAtom(exploreTaskAtom);
+  const [draft] = useAtom(draftTaskAtom);
+
+  const submitted = explore.filter((item) => item.accepted === true);
+  const completed = explore.filter(
+    (item) => item.accepted === true && item.claim === true,
+  );
 
   if (!publicKey) {
     return (
@@ -19,20 +27,6 @@ export function AcceptedList() {
     );
   }
 
-  const draftList = api.accepted.draft.useQuery(
-    { address: publicKey.toString() },
-    { enabled: !!publicKey, refetchInterval: 1000 },
-  ).data;
-
-  const submitted = api.accepted.submitted.useQuery(
-    { address: publicKey.toString() },
-    { enabled: !!publicKey,refetchInterval: 1000 },
-  ).data;
-  const completed = api.accepted.completed.useQuery(
-    { address: publicKey.toString() },
-    { enabled: !!publicKey ,refetchInterval: 1000},
-  ).data;
-
   return (
     <>
       {connected ? (
@@ -40,14 +34,12 @@ export function AcceptedList() {
           <div className="space-y-2">
             <div className="flex items-center space-x-1">
               <span className="font-semibold capitalize">Draft</span>
-              <span className="rounded-full bg-white px-2 font-normal">
-                {draftList?.length}
+              <span className="hrink-0 relative flex overflow-hidden rounded-full bg-white px-2 font-normal ">
+                {draft?.length}
               </span>
             </div>
             <div className="grid grid-cols-1 gap-4 transition-all duration-300">
-              {draftList?.map((item, index) => (
-                <TaskCenterAcceptedBox key={index} {...item.task} />
-              ))}
+              {draft?.map((item, index) => <HardBox key={index} {...item} />)}
             </div>
           </div>
           <div className="space-y-2">
@@ -59,7 +51,7 @@ export function AcceptedList() {
             </div>
             <div className="grid grid-cols-1 gap-4">
               {submitted?.map((item, index) => (
-                <TaskCenterSubmittedBox key={index} {...item.task} />
+                <HardViewBox key={index} {...item} />
               ))}
             </div>
           </div>
@@ -72,7 +64,7 @@ export function AcceptedList() {
             </div>
             <div className="grid grid-cols-1 gap-4">
               {submitted?.map((item, index) => (
-                <TaskCenterCompletedBox key={index} {...item.task} />
+                <HardViewBox key={index} {...item} />
               ))}
             </div>
           </div>

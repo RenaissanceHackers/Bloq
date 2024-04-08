@@ -1,5 +1,6 @@
 "use client";
 
+import bs58 from "bs58";
 import React from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
@@ -26,8 +27,15 @@ import {
 } from "../ui/form";
 import { api } from "~/trpc/react";
 import { useWallet } from "@jup-ag/wallet-adapter";
+import toast from "react-hot-toast";
+import { useAtom } from "jotai";
+import { draftTaskAtom } from "~/context/atom";
 
 type TReward = "token" | "point";
+
+function delay(seconds: number) {
+  return new Promise((resolve) => setTimeout(resolve, seconds * 1000));
+}
 
 const FormSchema = z.object({
   title: z.string(),
@@ -45,8 +53,12 @@ const defaultValues: Partial<FormValues> = {
 };
 
 export function CreateTaskForm() {
-  const { publicKey } = useWallet();
+  const { publicKey, signMessage } = useWallet();
   const [reward, setReward] = React.useState<TReward>("token");
+
+  const [loading, setLoading] = React.useState(false);
+
+  const [draft, setDraft] = useAtom(draftTaskAtom);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(FormSchema),
@@ -56,12 +68,68 @@ export function CreateTaskForm() {
 
   const { mutate } = api.task.create.useMutation();
 
-  function onSubmit(data: FormValues) {
-    console.log(data);
+  async function onSubmit(data: FormValues) {
     if (publicKey) {
+      toast("Good Job!", {
+        icon: "👏",
+      });
+      setLoading(true);
       const now = Date.now();
+
+      const snonce = String(now).slice(0, 10);
+
+      let base58SignedMessage: string;
+
+      const message = JSON.stringify({
+        snonce,
+        create: data.title,
+      });
+      if (
+        window.okxwallet?.solana != null &&
+        window.okxwallet.solana.isConnected &&
+        window.okxwallet.solana._publicKey != null
+      ) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        const signedMessage = await window.okxwallet.solana.signMessage(
+          new TextEncoder().encode(message),
+          "utf8",
+        );
+        base58SignedMessage = bs58.encode(
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
+          Buffer.from(signedMessage.signature),
+        );
+      } else {
+        const signedMessage = await signMessage!(
+          new TextEncoder().encode(message),
+        );
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        base58SignedMessage = bs58.encode(Buffer.from(signedMessage));
+      }
       const expiryDate = new Date(now + parseInt(data.duration, 10) * 1000);
 
+      await delay(3);
+
+      setDraft([
+        ...draft,
+        {
+          path: "/test.jpg",
+          title: data.title,
+          token: data.tokenRewardName ? true : false,
+          description: data.description,
+          tokenAmount: data.tokenRewardAmount ? data.tokenRewardAmount : "0",
+          pointAmount: data.pointRewardAmount ? data.pointRewardAmount : "0",
+          tokenName: data.tokenRewardName ? data.tokenRewardName : "",
+          contribution: calculateContributionPoints(
+            data.tokenRewardAmount ? data.tokenRewardAmount : "0",
+          ),
+          participants: "0",
+          accepted: false,
+          taskTwitter: "",
+          claim: false,
+          descriptionDetail: `${data.description}`,
+          progress: false,
+        },
+      ]);
       mutate({
         title: data.title,
         description: data.description,
@@ -76,6 +144,7 @@ export function CreateTaskForm() {
         pointAmount: data.tokenRewardAmount,
         tokenAmount: data.tokenRewardAmount,
       });
+      setLoading(false);
     }
   }
 
@@ -212,19 +281,6 @@ export function CreateTaskForm() {
               </FormItem>
             )}
           />
-
-          {/* <Select>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Select Token" defaultValue="solana" />
-          </SelectTrigger>
-          <SelectContent>
-            {tokenList.map((item, index) => (
-              <SelectItem value={item.value} key={index}>
-                {item.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select> */}
         </div>
         <span className="font-semibold leading-none tracking-tight">
           4. Requirements
@@ -246,9 +302,18 @@ export function CreateTaskForm() {
           </span>
           <span>Contribution points</span>
         </div>
-        <Button type="submit" className="bg-green-500 hover:bg-green-600 text-white font-semibold text-lg">
-          publish
-        </Button>
+        {loading ? (
+          <Button className="bg-green-500 text-lg font-semibold text-white hover:bg-green-600">
+            loading...
+          </Button>
+        ) : (
+          <Button
+            type="submit"
+            className="bg-green-500 text-lg font-semibold text-white hover:bg-green-600"
+          >
+            publish
+          </Button>
+        )}
       </form>
     </Form>
   );

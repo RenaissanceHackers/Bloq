@@ -1,13 +1,15 @@
+"use client";
+
 import React from "react";
 
-import { api } from "~/trpc/server";
-import { TaskCenterBox } from "~/components/taskcenter/box";
 import { AcceptedList } from "~/components/taskcenter/accepted-list";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
+import { HardBox } from "~/components/taskcenter/hard-box";
+import { useAtom } from "jotai";
+import { exploreTaskAtom } from "~/context/atom";
 
-export default async function TaskCenterPage() {
-  const all_task = await api.task.get();
-
+export default function TaskCenterPage() {
+  const [exploreTask] = useAtom(exploreTaskAtom);
   return (
     <section className="flex-1 bg-background">
       <div className="container max-w-7xl flex-1 space-y-3 py-12">
@@ -23,15 +25,11 @@ export default async function TaskCenterPage() {
           </TabsList>
           <TabsContent value="explore">
             <React.Suspense>
-              {all_task ? (
-                <div className="grid flex-1 flex-grow gap-4 pt-4 transition-all duration-300  md:grid-cols-2 lg:grid-cols-3">
-                  {all_task.map((item) => (
-                    <TaskCenterBox key={item.id} {...item} />
-                  ))}
-                </div>
-              ) : (
-                <div>loading</div>
-              )}
+              <div className="grid flex-1 flex-grow gap-4 pt-4 transition-all duration-300  md:grid-cols-2 lg:grid-cols-3">
+                {exploreTask.map((item, index) => (
+                  <HardBox key={index} {...item} />
+                ))}
+              </div>
             </React.Suspense>
           </TabsContent>
           <TabsContent value="accepted">

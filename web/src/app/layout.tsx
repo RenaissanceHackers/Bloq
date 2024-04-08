@@ -4,6 +4,7 @@ import "~/styles/prosemirror.css";
 
 import { font } from "~/lib/font";
 
+import { Toaster } from "react-hot-toast";
 import { Providers } from "~/components/providers";
 import { SiteHeader } from "~/components/layout/site-header";
 import { ScrollToTop } from "~/components/layout/scroll-to-top";
@@ -27,6 +28,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <Providers>
           <CreateWithWallet>
             <div className="relative flex h-screen flex-col bg-background antialiased dark:bg-neutral-950">
+              <Toaster />
               <SiteHeader />
               <main className="flex-1">{children}</main>
               <ScrollToTop />
