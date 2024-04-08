@@ -39,8 +39,17 @@ export default function HomePage() {
         <CommandMenu />
         <div className="flex max-w-6xl flex-1 transform justify-center transition-all duration-300 ease-in-out xl:justify-between">
           <List />
-          <div className="hidden h-fit w-full max-w-96 py-2 xl:block">
-            <div className="flex w-full rounded-md border p-6 shadow">test</div>
+          <div className="sticky top-20 hidden h-fit w-full max-w-96 py-2 xl:block ">
+            <div className="flex w-full gap-4 rounded-md border p-6 shadow flex-col">
+              <div className="font-bold">
+                Bloq: Transforming Airdrops into Real Impact
+              </div>
+              Bloq is a revolutionary platform focusing on the Consumer Apps
+              track for Airdrops Driven Content Creation. Our mission is to make
+              the Airdrops Economy in the Solana Ecosystem more efficient and
+              beneficial, transforming the way airdrops are distributed and
+              utilized.
+            </div>
           </div>
         </div>
       </div>

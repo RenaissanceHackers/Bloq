@@ -9,6 +9,7 @@ import { siteConfig } from "~/config/site";
 import { usePathname } from "next/navigation";
 
 import { cn } from "~/lib/utils";
+import Image from "next/image";
 
 interface Route {
   readonly label: string;
@@ -25,12 +26,14 @@ export const MainNav = React.memo(({ routes }: MainNavProps) => {
   return (
     <div className="mr-4 hidden md:flex">
       <Link href="/" className="mr-6 flex items-center space-x-2">
-        <Icons.logo className="h-6 w-6" />
+        <div className="relative h-6 w-6">
+          <Image src={"/logo.png"} fill alt="logo" />
+        </div>
         <span className="hidden font-bold uppercase sm:inline-block">
           {siteConfig.name}
         </span>
       </Link>
-      <nav className="gap-2 flex lg:gap-4 items-center text-sm">
+      <nav className="flex items-center gap-2 text-sm lg:gap-4">
         {routes.map((route, index) => (
           <Link
             href={route.path}
