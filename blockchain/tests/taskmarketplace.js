@@ -7,7 +7,7 @@ describe("task_marketplace", () => {
   anchor.setProvider(provider);
 
   it("Can create a task", async () => {
-    const program = anchor.workspace.TaskMarketplace;
+    const program = anchor.workspace.taskmarketplace;
     const task = anchor.web3.Keypair.generate();
 
     await program.rpc.createTask(

@@ -1,9 +1,9 @@
 use anchor_lang::prelude::*;
 
-declare_id!("TQDy38CR1UyHnwP8eGL1tKdNjDjRRH5AdhGiUXuYqtH");
+declare_id!("qUXSXhbCmwFiEbVSRNVkQSNDuM9dLXQHxmfxus72ZKc");
 
 #[program]
-pub mod task_marketplace {
+pub mod taskmarketplace {
     use super::*;
     
     pub fn create_task(ctx: Context<CreateTask>, title: String, description: String, duration: i64, reward_amount: u64) -> Result<()> {
