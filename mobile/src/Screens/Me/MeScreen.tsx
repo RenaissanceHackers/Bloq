@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native'
+import { Text, View, StyleSheet, Image, ScrollView } from 'react-native'
 import React from 'react'
 import BottomTabsComponent from '@/Components/BottomTabsComponent'
 import { CommonStyles, RouteName, Texts } from '@/Constants'
@@ -26,8 +26,8 @@ const MeScreen = () => {
             }
         },
         {
-            icon1: Icons.CompassIcon, text: Texts.MeTasksCenter, icon2: Icons.ChevronRightBigIcon, isNew: true, onPress: () => {
-                navigate({ name: "me/taskscenter/explore/explore", params: null })
+            icon1: Icons.MeCommunityIcon, text: Texts.MeCommunity, icon2: Icons.ChevronRightBigIcon, isNew: false, onPress: () => {
+                navigate({ name: "me/community/group", params: null })
             }
         }
     ]
@@ -47,7 +47,7 @@ const MeScreen = () => {
     return (
         <View style={[CommonStyles.baseFrame,]}>
             <Image style={styles.meImage} source={{
-                uri: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/peperoni.png'
+                uri: 'https://img2.baidu.com/it/u=3231431255,2365970740&fm=253&fmt=auto&app=138&f=JPEG?w=400&h=400'
             }}>
             </Image>
             <View style={styles.frame629425}>
@@ -82,6 +82,7 @@ const styles = StyleSheet.create({
     meImage: {
         width: 80,
         height: 80,
+        borderRadius: 99
     },
     frame629425: {
         marginTop: 16,

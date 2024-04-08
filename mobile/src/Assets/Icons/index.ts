@@ -1,9 +1,8 @@
 import HomeIcon from "./home-05.svg"
-import CommunityIcon from "./message-circle-01.svg"
+import MeCommunityIcon from "./message-circle-01.svg"
 import RankIcon from "./stars-01.svg"
 import MeIcon from "./user-01.svg"
 import HomeIconFocused from "./home-05-focused.svg"
-import CommunityIconFocused from "./message-circle-01-focused.svg"
 import RankIconFocused from "./stars-01-focused.svg"
 import MeIconFocused from "./user-01-focused.svg"
 import SearchSmIcon from "./search-sm.svg"
@@ -24,7 +23,6 @@ import ExitIcon from "./share-02.svg"
 import BoxIcon from "./box.svg"
 import UserIcon from "./user-02.svg"
 import GridIcon from "./grid-01.svg"
-import CompassIcon from "./compass-03.svg"
 import SettingsIcon from "./settings-01.svg"
 import WalletIcon from "./wallet-02.svg"
 import QRIcon from "./qr-code-02.svg"
@@ -59,14 +57,16 @@ import Twitter from "./Vector.svg"
 import Telegram from "./Subtract.svg"
 import TaskChevronDown from "./chevron-down-black.svg"
 import CompletedCreditDown from "./credit-card-down.svg"
+import TasksCenterIcon from "./compass-03.svg"
+import TasksCenterIconFocused from "./compass-03-focused.svg"
 
 export default {
     MeIcon,
-    CommunityIcon,
+    TasksCenterIcon,
     RankIcon,
     HomeIcon,
     MeIconFocused,
-    CommunityIconFocused,
+    TasksCenterIconFocused,
     RankIconFocused,
     HomeIconFocused,
     SearchSmIcon,
@@ -86,7 +86,6 @@ export default {
     ExitIcon,
     SettingsIcon,
     BoxIcon,
-    CompassIcon,
     GridIcon,
     UserIcon,
     WalletIcon,
@@ -116,11 +115,13 @@ export default {
     MyContentSaveIcon,
     MyContentUserIcon,
     MyContentGroupDetailEditIcon,
+    MeCommunityIcon,
     TaskCardLock,
     TaskCardStar,
     Twitter,
     Telegram,
     TaskChevronDown,
     CompletedCreditDown,
+
 
 }

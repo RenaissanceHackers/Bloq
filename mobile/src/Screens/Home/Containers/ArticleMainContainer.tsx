@@ -19,7 +19,7 @@ const ArticleMainContainer = () => {
 
             <View style={styles.frame629401WithAccept}>
                 <View style={styles.frame629398}>
-                    <Image style={styles.image} source={{ uri: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/peperoni.png' }} />
+                    <Image style={styles.image} source={{ uri: 'https://solana.com/_next/image?url=https%3A%2F%2Fcdn.builder.io%2Fapi%2Fv1%2Fimage%2Fassets%252Fce0c7323a97a4d91bd0baa7490ec9139%252Fd6398d22e46f45e0bf09e452c21241f7&w=1920&q=75' }} />
                     <Text style={styles.authorName}>
                         SOLANAFLOOR
                     </Text>

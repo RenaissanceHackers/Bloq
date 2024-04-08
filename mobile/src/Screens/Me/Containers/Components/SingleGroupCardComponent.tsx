@@ -13,7 +13,7 @@ type GroupCardItemProps = {
 function SingleGroupCardComponent({ group }: GroupCardItemProps) {
     const handlePress = () => {
         // 使用navigation.navigate跳转到详情页面，同时传递新闻的ID或整个新闻对象作为参数
-        navigate({ name: "me/mycontent/group/detail", params: { groupId: group.id } })
+        navigate({ name: "me/community/detail", params: { groupId: group.id } })
     };
     return (
         <TouchableOpacity onPress={handlePress}>

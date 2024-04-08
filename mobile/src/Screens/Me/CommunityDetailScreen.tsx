@@ -12,12 +12,12 @@ import { CommonStyles, Texts } from '@/Constants'
 import { Icons } from '@/Assets'
 import { SCREEN_WIDTH } from '@/Utils/common'
 
-const DetailScreen = ({ route }) => {
+const CommunityDetailScreen = ({ route }) => {
     const { groupId } = route.params;
     return (
         <View style={CommonStyles.baseFrame}>
             <View style={styles.frame629433}>
-                <BackButton text={"My content"} />
+                <BackButton text={"Back"} />
                 <View style={styles.icon}>
                     <Icons.ShareIcon></Icons.ShareIcon>
                 </View>
@@ -52,4 +52,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default DetailScreen
+export default CommunityDetailScreen

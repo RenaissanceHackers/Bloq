@@ -51,11 +51,11 @@ const SingleCommentContainer = ({ comment }: SingleCommentComponentProps) => {
             {result.map(comment => {
                 switch (comment.depth) {
                     case 0:
-                        return <CommentDepthZeroComponent name={comment.name} content={comment.content} date={comment.commentDate} id={comment.id} key={comment.id} />;
+                        return <CommentDepthZeroComponent name={comment.name} content={comment.content} date={comment.commentDate} id={comment.id} key={comment.id} image={comment.image} />;
                     case 1:
-                        return <CommentDepthOneComponent name={comment.name} content={comment.content} date={comment.commentDate} id={comment.id} key={comment.id} />;
+                        return <CommentDepthOneComponent name={comment.name} content={comment.content} date={comment.commentDate} id={comment.id} key={comment.id} image={comment.image} />;
                     default:
-                        return <CommentDepthGreaterThanOneComponent name={comment.name} content={comment.content} date={comment.commentDate} id={comment.id} key={comment.id} replyName={comment.replyUser} />;
+                        return <CommentDepthGreaterThanOneComponent name={comment.name} content={comment.content} date={comment.commentDate} id={comment.id} key={comment.id} replyName={comment.replyUser} image={comment.image} />;
                 }
             })}
             <View style={styles.line} />

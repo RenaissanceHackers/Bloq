@@ -1,6 +1,6 @@
 import { ListRenderItemInfo, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { PureComponent } from 'react'
-import { CommonStyles } from '@/Constants'
+import { CommonStyles, RouteName } from '@/Constants'
 import BackButton from '@/Components/BackComponent'
 import HeaderText from '@/Components/HeaderText'
 import TwoTabComponent from '@/Components/TwoTabComponent'
@@ -14,6 +14,9 @@ import { Icons } from '@/Assets'
 import TestTaskCard3 from 'assets/data/taskcard3'
 import Taskscard3 from '@/Components/TaskCard3'
 import ClaimRewardContainer from './Containers/ClaimRewardContainer'
+import BottomTabsComponent from '@/Components/BottomTabsComponent'
+import AspectRatio from '@/Constants/AspectRatio'
+import { Header } from '@/Components'
 
 
 const TasksCenterScreen = () => {
@@ -27,12 +30,13 @@ const TasksCenterScreen = () => {
 
     return (
         <View style={CommonStyles.baseFrame}>
+            <Header showCard={false} text={'Tasks Center'} />
             <ClaimRewardContainer visible={claimRewardVisible} onClose={() => setClaimRewardVisible(false)} />
-            <View style={{ width: SCREEN_WIDTH - 20 - 20 }}>
-                <BackButton text={"Me"} />
+            <View style={{ width: SCREEN_WIDTH - 20 - 20, height: 24 }}>
+
             </View>
-            <View style={{ height: 24, marginTop: 20, marginLeft: 16, justifyContent: "space-between", flexDirection: "row", width: SCREEN_WIDTH - 16 - 16, alignItems: "center" }}>
-                <TwoTabComponent textFirst={"Explore"} textSecond={'Accepted'} showTabs1or2={setShowTabs1or2} showIcon={false} />
+            <View style={{ height: 24, marginLeft: 16, justifyContent: "space-between", flexDirection: "row", width: SCREEN_WIDTH - 16 - 16, alignItems: "center" }}>
+                <TwoTabComponent textFirst={"Explore"} textSecond={'Accepted'} showTabs1or2={setShowTabs1or2} showIcon={false} extraEvent={() => { setTabIndex(0) }} />
                 {showTabs1or2 ? null :
                     <TouchableOpacity onPress={() => setPickerVisible(!pickerVisible)}>
                         <View style={styles.tab}>
@@ -53,8 +57,7 @@ const TasksCenterScreen = () => {
                     </TouchableOpacity>
                 }
             </View>
-            <HeaderText text={"Tasks center"} />
-            <View style={{ marginTop: 11 }}>
+            <View style={{ marginTop: 11, height: SCREEN_HEIGHT - AspectRatio.marginTopRatio * SCREEN_HEIGHT - 11 - 83 - 24 - 40 }}>
                 {tabIndex !== 2 ? <FlatList
                     data={showTabs1or2 ? TestTaskCard : TestTaskCard2}
                     renderItem={({ item }) => (
@@ -68,7 +71,6 @@ const TasksCenterScreen = () => {
                 )}
                     numColumns={2}
                     ItemSeparatorComponent={renderSeparator}
-
                     keyExtractor={item => item.id} />}
             </View>
             {/* <PickerTaskType visible={pickerVisible} onClose={() => setPickerVisible(false)} /> */}
@@ -78,18 +80,16 @@ const TasksCenterScreen = () => {
                         <Text style={[CommonStyles.textXs_leading4_fontNormal, { color: tabIndex === 0 ? "#000000" : "#71717A" }]}>Draft</Text>
                     </TouchableOpacity>
                     <View style={styles.line6}></View>
-                    <TouchableOpacity onPress={() => { setTabIndex(1); setPickerVisible(false) }}>
-                        <Text style={[CommonStyles.textXs_leading4_fontNormal, { color: tabIndex === 1 ? "#000000" : "#71717A" }]}>Submitted</Text>
-                    </TouchableOpacity>
+                    {/* <TouchableOpacity onPress={() => { setTabIndex(1); setPickerVisible(false) }}> */}
+                    <Text style={[CommonStyles.textXs_leading4_fontNormal, { color: tabIndex === 1 ? "#000000" : "#71717A" }]}>Submitted</Text>
+                    {/* </TouchableOpacity> */}
                     <View style={styles.line6}></View>
                     <TouchableOpacity onPress={() => { setTabIndex(2); setPickerVisible(false) }}>
                         <Text style={[CommonStyles.textXs_leading4_fontNormal, { color: tabIndex === 2 ? "#000000" : "#71717A" }]}>Completed</Text>
                     </TouchableOpacity>
                 </View>
             </View> : null}
-
-
-
+            <BottomTabsComponent name={RouteName.MainRouter.TasksCenter} />
         </View >
     )
 }

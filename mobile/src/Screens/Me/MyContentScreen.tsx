@@ -11,6 +11,7 @@ import BottomTabsComponent from '@/Components/BottomTabsComponent'
 import HeaderText from '@/Components/HeaderText'
 import { SCREEN_HEIGHT } from '@/Utils/common'
 import AspectRatio from '@/Constants/AspectRatio'
+import MyContentSingleGroupCardComponent from './Containers/Components/MyContentSingleGroupCard'
 
 const MyContentScreen = () => {
     const [showTab1or2, setShowTab1or2] = React.useState(true)
@@ -29,7 +30,7 @@ const MyContentScreen = () => {
                         keyExtractor={item => item.id.toString()}
                     /> : <FlatList
                         data={TestGroups}
-                        renderItem={({ item }) => <SingleGroupCardComponent group={
+                        renderItem={({ item }) => <MyContentSingleGroupCardComponent group={
                             item
                         } />}
                         keyExtractor={item => item.id.toString()} />}

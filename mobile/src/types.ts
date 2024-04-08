@@ -132,22 +132,22 @@ export type RouteParamList = {
     "me/mycontent/group": undefined,
     "me/mycontent/group/detail": { groupId: string },
     "me/mycontent/group/detail/management": undefined,
-    "me/taskscenter/explore/explore": undefined,
-    "me/taskscenter/explore/detail": { taskId: string },
-    "me/taskscenter/accepted/draft": undefined,
-    "me/taskscenter/accepted/completed": undefined,
-    "me/taskscenter/accepted/completed/claim": undefined,
+    "taskscenter/explore/explore": undefined,
+    "taskscenter/explore/detail": { taskId: string },
+    "taskscenter/accepted/draft": undefined,
+    "taskscenter/accepted/completed": undefined,
+    "taskscenter/accepted/completed/claim": undefined,
     "Home": undefined,
     "Rank": undefined,
-    "Community": undefined,
+    "TasksCenter": undefined,
     "Me": undefined,
     "home": undefined;
     "home/article": { articleId: string };
     "home/article/comment": undefined;
     "home/article/share": undefined;
-    "community/group": undefined,
-    "community/detail": { groupId: string },
-    "community/message": undefined
+    "me/community/group": undefined,
+    "me/community/detail": { groupId: string },
+    "me/community/message": undefined
     "rank": undefined;
 }
 

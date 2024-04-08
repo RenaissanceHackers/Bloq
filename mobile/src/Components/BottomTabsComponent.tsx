@@ -20,8 +20,8 @@ const BottomTabsComponent = ({ name }: nameProp) => {
                 <TouchableOpacity onPress={() => navigate({ name: 'Rank', params: undefined })}>
                     {name === RouteName.MainRouter.Rank ? <Icons.RankIconFocused /> : <Icons.RankIcon />}
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => navigate({ name: 'Community', params: undefined })}>
-                    {name === RouteName.MainRouter.Community ? <Icons.CommunityIconFocused /> : <Icons.CommunityIcon />}
+                <TouchableOpacity onPress={() => navigate({ name: 'TasksCenter', params: undefined })}>
+                    {name === RouteName.MainRouter.TasksCenter ? <Icons.TasksCenterIconFocused /> : <Icons.TasksCenterIcon />}
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => navigate({ name: 'Me', params: undefined })}>
                     {name === RouteName.MainRouter.Me ? <Icons.MeIconFocused /> : <Icons.MeIcon />}

@@ -4,10 +4,10 @@ import theme from '@/Assets/theme'
 import { SCREEN_WIDTH } from '@/Utils/common'
 import { Texts } from '@/Constants'
 
-const CommentDepthZeroComponent = ({ name, content, date, id }) => {
+const CommentDepthZeroComponent = ({ name, content, date, id, image }) => {
     return (
         <View style={styles.frame629456} key={id}>
-            <Image style={styles.userImage1} source={{ uri: "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/peperoni.png" }}></Image>
+            <Image style={styles.userImage1} source={{ uri: image }}></Image>
             <View style={styles.frame629455}>
                 <View style={styles.frame629453}>
                     <Text style={styles.userName}>
@@ -30,10 +30,10 @@ const CommentDepthZeroComponent = ({ name, content, date, id }) => {
     )
 }
 
-const CommentDepthOneComponent = ({ name, content, date, id }) => {
+const CommentDepthOneComponent = ({ name, content, date, id, image }) => {
     return (
         <View style={styles.frame629460} key={id}>
-            <Image style={styles.userImage2} source={{ uri: "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/peperoni.png" }}></Image>
+            <Image style={styles.userImage2} source={{ uri: image }}></Image>
             <View style={styles.frame629459}>
                 <View style={styles.frame629453}>
                     <Text style={styles.userName}>
@@ -56,10 +56,10 @@ const CommentDepthOneComponent = ({ name, content, date, id }) => {
     )
 }
 
-const CommentDepthGreaterThanOneComponent = ({ name, content, date, id, replyName }) => {
+const CommentDepthGreaterThanOneComponent = ({ name, content, date, id, replyName, image }) => {
     return (
         <View style={styles.frame629460} key={id}>
-            <Image style={styles.userImage2} source={{ uri: "https://notjustdev-dummy.s3.us-east-2.amazonaws.com/food/peperoni.png" }}></Image>
+            <Image style={styles.userImage2} source={{ uri: image }}></Image>
             <View style={styles.frame629459}>
                 <View style={styles.frame629453}>
                     <View style={styles.frame629461}>

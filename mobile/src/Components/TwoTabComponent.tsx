@@ -16,6 +16,7 @@ interface TwoTabComponentProps {
     showTabs1or2: (value: boolean) => void;
     showIcon: boolean;
     editIcon?: boolean
+    extraEvent?: () => void;
 }
 
 export default class TwoTabComponent extends Component<TwoTabComponentProps, State> {
@@ -36,19 +37,19 @@ export default class TwoTabComponent extends Component<TwoTabComponentProps, Sta
 
     render() {
         const { isFirstFocused, isSecondFocused } = this.state;
-        const { textFirst, textSecond, showTabs1or2, showIcon, editIcon } = this.props;
+        const { textFirst, textSecond, showTabs1or2, showIcon, editIcon, extraEvent } = this.props;
         return (
             <View style={{ flexDirection: "row", width: "auto", justifyContent: "space-between" }}>
                 <View style={styles.tabBar}>
                     <TouchableOpacity
                         style={[styles.buttonFirst, isFirstFocused ? styles.focused : null]}
-                        onPress={() => { this.onPressFirst(); showTabs1or2(true) }}
+                        onPress={() => { this.onPressFirst(); showTabs1or2(true); extraEvent ? extraEvent() : null }}
                     >
                         <Text style={styles.textFirst}>{textFirst}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={[styles.buttonSecond, isSecondFocused ? styles.focused : null]}
-                        onPress={() => { this.onPressSecond(); showTabs1or2(false) }}
+                        onPress={() => { this.onPressSecond(); showTabs1or2(false); extraEvent ? extraEvent() : null }}
                     >
                         <Text style={styles.textSecond}>{textSecond}</Text>
                     </TouchableOpacity>

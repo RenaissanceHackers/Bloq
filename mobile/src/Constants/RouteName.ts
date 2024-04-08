@@ -1,9 +1,8 @@
 const MainRouter = {
     Home: "Home",
     Rank: "Rank",
-    Community: "Community",
+    TasksCenter: "TasksCenter",
     Me: "Me",
-    Main: "Main"
 }
 const HomeRouter = {
     home: "home",
@@ -48,29 +47,32 @@ const MeRouter = {
             management: "me/mycontent/group/detail/management",
         }
     },
-    taskscenter: {
-        explore: {
-            detail: "me/taskscenter/explore/detail",
-            explore: "me/taskscenter/explore/explore",
-        },
-        accepted: {
-            draft: "me/taskscenter/accepted/draft",
-            completed: {
-                completed: "me/taskscenter/accepted/completed",
-                claim: "me/taskscenter/accepted/completed/claim"
-            }
-        },
+    community: {
+        group: "me/community/group",
+        detail: "me/community/detail",
+        message: "me/community/message"
     }
+
 }
 
-const CommunityRouter = {
-    group: "community/group",
-    detail: "community/detail",
-    message: "community/message"
+const TasksCenterRouter = {
+    explore: {
+        detail: "taskscenter/explore/detail",
+        explore: "taskscenter/explore/explore",
+    },
+    accepted: {
+        draft: "taskscenter/accepted/draft",
+        completed: {
+            completed: "taskscenter/accepted/completed",
+            claim: "taskscenter/accepted/completed/claim"
+        }
+    },
 }
+
+
 
 const RankRouter = {
     rank: "rank"
 }
 
-export default { HomeRouter, MainRouter, RankRouter, MeRouter, CommunityRouter }
+export default { HomeRouter, MainRouter, RankRouter, MeRouter, TasksCenterRouter }

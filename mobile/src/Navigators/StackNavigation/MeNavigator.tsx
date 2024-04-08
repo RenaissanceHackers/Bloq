@@ -11,10 +11,10 @@ import MyContentScreen from '@/Screens/Me/MyContentScreen';
 import MyContentDetailScreen from '@/Screens/Me/MyContentDetailScreen';
 import MyContentGroupScreen from '@/Screens/Me/MyContentGroupScreen';
 import ManagementScreen from '@/Screens/Me/ManagementScreen';
-import TasksCenterScreen from '@/Screens/Me/TasksCenterScreen';
-import TaskDetail from '@/Screens/Me/TaskDetailScreen';
-import TaskDetailScreen from '@/Screens/Me/TaskDetailScreen';
+
 import ToolsScreen from '@/Screens/Me/ToolsScreen';
+import CommunityGroupScreen from '@/Screens/Me/CommunityGroupScreen';
+import CommunityDetailScreen from '@/Screens/Me/CommunityDetailScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -51,16 +51,16 @@ export default function MeNavigator() {
             <Stack.Screen name={RouteName.MeRouter.mycontent.group.management} component={ManagementScreen} options={{
                 headerShown: false
             }} />
-            <Stack.Screen name={RouteName.MeRouter.taskscenter.explore.detail} component={TaskDetailScreen} options={{
-                headerShown: false
-            }} />
-            <Stack.Screen name={RouteName.MeRouter.taskscenter.explore.explore} component={TasksCenterScreen} options={{
-                headerShown: false
-            }} />
+
             <Stack.Screen name={RouteName.MeRouter.mycontent.article.tools} component={ToolsScreen} options={{
                 headerShown: false
             }} />
-
+            <Stack.Screen name={RouteName.MeRouter.community.group} component={CommunityGroupScreen} options={{
+                headerShown: false
+            }} />
+            <Stack.Screen name={RouteName.MeRouter.community.detail} component={CommunityDetailScreen} options={{
+                headerShown: false
+            }} />
         </Stack.Navigator>
     );
 }

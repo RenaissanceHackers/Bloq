@@ -12,7 +12,7 @@ type Props = {
 const TaskCard = ({ taskcard }: Props) => {
     return (
         <TouchableOpacity onPress={() => {
-            navigate({ name: "me/taskscenter/explore/detail", params: { taskId: taskcard.id } })
+            navigate({ name: "taskscenter/explore/detail", params: { taskId: taskcard.id } })
         }}>
             <View style={styles.view}>
                 <View style={styles.frame629434}>

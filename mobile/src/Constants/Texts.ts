@@ -22,7 +22,7 @@ export default {
   MeWallet: "Wallet",
   MeProfile: "Profile",
   MeMyContent: "My content",
-  MeTasksCenter: "Tasks center",
+  MeCommunity: "Community",
   MeHistory: "History",
   MeSettings: "Settings",
   MeQuit: "Quit",

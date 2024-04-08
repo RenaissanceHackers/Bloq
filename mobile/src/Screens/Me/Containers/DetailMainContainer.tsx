@@ -1,7 +1,7 @@
-import { StyleSheet, Text, View, Image, FlatList, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, Image, FlatList } from 'react-native'
 import React, { useState } from 'react'
 import { GroupDetail } from '@/types'
-import { CommonStyles, Texts } from '@/Constants'
+import { Texts } from '@/Constants'
 import { TwoTab } from '@/Components'
 
 import TestGroupDetail from 'assets/data/groupDetail'
@@ -9,8 +9,6 @@ import { PlaceholderScreen } from '@/Screens/PlaceholderScreen'
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from '@/Utils/common'
 import theme from '@/Assets/theme'
 import SinglePostCardComponent from './Components/SinglePostCardComponent'
-import { Icons } from '@/Assets'
-import { navigate } from '@/Navigators/utils'
 
 type DetailMainComponentProps = {
     detail: GroupDetail
@@ -18,7 +16,6 @@ type DetailMainComponentProps = {
 
 const DetailMainComponent = ({ detail }: DetailMainComponentProps) => {
     const [showTab1or2, setShowTab1or2] = useState(true)
-
     return (
         <View style={styles.view}>
             <View style={styles.frame629427}>
@@ -27,16 +24,21 @@ const DetailMainComponent = ({ detail }: DetailMainComponentProps) => {
                 </View>
                 <Image style={styles.groupImage} source={{ uri: detail.groupImage }}></Image>
             </View>
+            <View style={styles.frame629448WithText}>
+                <View style={styles.frame629448}>
+                    <View style={styles.frame629447}>
+                        <Text style={styles.textCreator}>
+                            {Texts.DetailCreator}
+                        </Text>
+                        <Image style={styles.creatorImage} source={{ uri: detail.creatorImage }}></Image>
+                        <Text style={styles.textCreatorName}>{detail.creator}</Text>
+                    </View>
+                </View>
+                <Text style={styles.textFollowers}>{detail.followers} Followers</Text>
+            </View>
             <View style={styles.frame629432}>
-                <View>
-                    <Text style={styles.textNotes}>{Texts.DetailNotes}</Text>
-                    <Text style={styles.textNotesContent}>{detail.notes}</Text>
-                </View>
-
-                <View style={CommonStyles.icon24}>
-                    <Icons.MyContentGroupDetailEditIcon />
-                </View>
-
+                <Text style={styles.textNotes}>{Texts.DetailNotes}</Text>
+                <Text style={styles.textNotesContent}>{detail.notes}</Text>
             </View>
             <View style={styles.frame629428}>
                 <TwoTab textFirst={Texts.DetailTab1} textSecond={Texts.DetailTab2} showTabs1or2={setShowTab1or2} showIcon={true} />
@@ -73,7 +75,7 @@ const styles = StyleSheet.create({
         height: 64
     },
     frame629428: {
-        height: SCREEN_HEIGHT - 294,
+        height: SCREEN_HEIGHT - 326,
         width: SCREEN_WIDTH - 6 - 6,
         backgroundColor: "#FFFFFF",
         paddingTop: 24,
@@ -95,9 +97,8 @@ const styles = StyleSheet.create({
         gap: 8,
         height: 64,
         backgroundColor: "#FFFFFF",
-        alignItems: "center",
-        justifyContent: "space-between",
-        flexDirection: "row",
+        alignItems: "flex-start",
+        justifyContent: "center"
     },
     frame629448WithText: {
         flexDirection: "row",

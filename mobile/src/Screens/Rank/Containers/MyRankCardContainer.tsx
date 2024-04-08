@@ -9,17 +9,13 @@ const MyRankCardContainer = () => {
             <View style={styles.frame629431}>
                 <View style={styles.frame629430}>
                     <Text style={styles.textYourPoints}>Your Points</Text>
-                    <Text style={styles.numberPoint}>123,456 Points</Text>
+                    <Text style={styles.numberPoint}>2,751 Points</Text>
                 </View>
             </View>
             <View style={styles.frame629495}>
                 <View>
                     <Text style={styles.textYourPoints}>Next update</Text>
-                    <Text style={styles.numberPoint}>#100</Text>
-                </View>
-                <View>
-                    <Text style={styles.textYourPoints}>Next update</Text>
-                    <Text style={styles.numberPoint}>#100</Text>
+                    <Text style={styles.numberPoint}>#73</Text>
                 </View>
             </View>
         </View>
