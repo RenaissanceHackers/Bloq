@@ -28,8 +28,8 @@ Bloq connects the utility of the Protocol with the creativity of creators, reima
 We welcome contributions from the community. If you're interested in contributing to Bloq, please read our contributing guidelines and submit a pull request.
 
 ## Resources
-- [Bloq BP](URL_TO_YOUR_DECK)
-- [Web Product](URL_TO_YOUR_WEB_PRODUCT)
+- [Bloq BP](https://docs.google.com/presentation/d/1CacsWzm-kQkM910ttsck_mtNhIbFEbn65kSjlD4jKcI/edit?usp=sharing)
+- [Web Product](bloq.wiki)
 
 ## License
 (Include information about the license under which your project is distributed.)
