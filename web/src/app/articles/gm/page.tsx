@@ -46,7 +46,7 @@ const content = {
 
 export default function GmPage() {
   return (
-    <section className="relative flex-1 bg-background">
+    <section className="flex-1 bg-background">
       <div className="container flex max-w-5xl flex-1 flex-col space-y-3 py-4">
         <View
           title={""}
@@ -59,9 +59,6 @@ export default function GmPage() {
           updatedAt={"Mar 28"}
           path="/hardcode/article-3-avatar.webp"
         />
-        <div className="sticky bottom-0 flex justify-center rounded-3xl bg-background py-2">
-          <div></div>
-        </div>
       </div>
     </section>
   );

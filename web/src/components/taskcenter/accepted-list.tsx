@@ -34,7 +34,7 @@ export function AcceptedList() {
           <div className="space-y-2">
             <div className="flex items-center space-x-1">
               <span className="font-semibold capitalize">Draft</span>
-              <span className="hrink-0 relative flex overflow-hidden rounded-full bg-white px-2 font-normal ">
+              <span className="rounded-full bg-white px-2 font-normal dark:bg-[#111113]">
                 {draft?.length}
               </span>
             </div>
@@ -45,7 +45,7 @@ export function AcceptedList() {
           <div className="space-y-2">
             <div className="flex items-center space-x-1">
               <span className="font-semibold capitalize">Submitted</span>
-              <span className="rounded-full bg-white px-2 font-normal">
+              <span className="rounded-full bg-white px-2 font-normal dark:bg-[#111113]">
                 {submitted?.length}
               </span>
             </div>
@@ -58,7 +58,7 @@ export function AcceptedList() {
           <div className="space-y-2">
             <div className="flex items-center space-x-1">
               <span className="font-normal capitalize">Completed</span>
-              <span className="rounded-full bg-white px-2 font-normal">
+              <span className="rounded-full bg-white px-2 font-normal dark:bg-[#111113]">
                 {completed?.length}
               </span>
             </div>

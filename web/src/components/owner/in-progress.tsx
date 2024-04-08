@@ -11,7 +11,7 @@ export async function InProgress() {
     <div className="col-span-2 space-y-4">
       <div className="flex items-center space-x-1">
         <span className="font-normal capitalize">In Progress</span>
-        <span className="rounded-full bg-white px-2 font-normal">
+        <span className="rounded-full bg-white px-2 font-normal dark:bg-[#111113]">
           {progress.length}
         </span>
       </div>
