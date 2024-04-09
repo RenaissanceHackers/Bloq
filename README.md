@@ -7,7 +7,7 @@ Bloq is a revolutionary platform focusing on the Consumer Apps track for Airdrop
 - [Bloq BP](https://docs.google.com/presentation/d/1CacsWzm-kQkM910ttsck_mtNhIbFEbn65kSjlD4jKcI/edit?usp=sharing)
 
 ## Website
-- [WEB](http://www.blog.wiki)
+- [Website](http://www.bloq.wiki)
 
 
 <p align="center">
