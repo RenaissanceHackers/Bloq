@@ -14,7 +14,7 @@ import { CreateWithWallet } from "~/components/with-wallet";
 export const metadata = {
   title: "Renaissance",
   description: "Renaissance solana dapp",
-  icons: [{ rel: "icon", url: "/logo.png" }],
+  icons: [{ rel: "icon", url: "/logo.svg" }],
 };
 
 interface RootLayoutProps {

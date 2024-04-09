@@ -27,7 +27,7 @@ export const MainNav = React.memo(({ routes }: MainNavProps) => {
     <div className="mr-4 hidden md:flex">
       <Link href="/" className="mr-6 flex items-center space-x-2">
         <div className="relative h-6 w-6">
-          <Image src={"/logo.png"} fill alt="logo" />
+          <Image src={"/logo.svg"} fill alt="logo" />
         </div>
         <span className="hidden font-bold uppercase sm:inline-block">
           {siteConfig.name}
